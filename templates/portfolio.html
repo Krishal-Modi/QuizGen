@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio Projects - Krish{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Portfolio Header -->
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4 fw-bold mb-3">My Portfolio</h1>
+            <p class="lead text-muted">Full-stack projects showcasing AI/ML, web development, and system design expertise</p>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="row g-4">
+        <!-- Project 1: Quiz Generator -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                        <i class="bi bi-brain"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">Quiz Generator</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-primary bg-opacity-25 text-primary">Python</span>
+                        <span class="badge bg-info bg-opacity-25 text-info">Flask</span>
+                        <span class="badge bg-warning bg-opacity-25 text-warning">AI/ML</span>
+                        <span class="badge bg-success bg-opacity-25 text-success">NLP</span>
+                    </div>
+                    <div class="project-description">
+                        <p>An AI-powered adaptive quiz platform that generates personalized assessments from lecture documents. Uses NLP pipelines (TF-IDF, RAKE, KeyBERT, spaCy NER) to extract key concepts, builds knowledge graphs to model concept relationships, and creates MCQ/True-False/Short-Answer questions using transformer/LLM-based generation. Applies Thompson Sampling (Multi-Armed Bandit) and difficulty control to adapt questions in real-time based on student mastery, then provides personalized learning recommendations.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-primary">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2: HealPoint -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                        <i class="bi bi-hospital"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">HealPoint</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-danger bg-opacity-25 text-danger">Java</span>
+                        <span class="badge bg-dark bg-opacity-25 text-dark">Spring Boot</span>
+                        <span class="badge bg-info bg-opacity-25 text-info">REST APIs</span>
+                        <span class="badge bg-secondary bg-opacity-25 text-secondary">PostgreSQL</span>
+                    </div>
+                    <div class="project-description">
+                        <p>A REST API-based hospital management system with authentication and authorization. Features doctor's slot booking by specialization, inventory tracking with stock limits, cart functionality for medicines, and a comprehensive billing system. Implements JWT authentication, role-based access control, and secure payment processing.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-danger">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3: Resume Insights -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">Resume Insights</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-primary bg-opacity-25 text-primary">Python</span>
+                        <span class="badge bg-success bg-opacity-25 text-success">Django</span>
+                        <span class="badge bg-warning bg-opacity-25 text-warning">NLP</span>
+                        <span class="badge bg-info bg-opacity-25 text-info">SQLite</span>
+                    </div>
+                    <div class="project-description">
+                        <p>A web app with login/signup, ATS score checking, email/phone extraction from resumes using NLP, and email notifications. Offers a smooth user interface for improved experience. Features ML-based keyword extraction, resume parsing, and real-time ATS compatibility scoring.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-primary">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 4: Banking Application -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #059669 0%, #065f46 100%);">
+                        <i class="bi bi-cash-coin"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">Banking Application</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-success bg-opacity-25 text-success">Java</span>
+                        <span class="badge bg-dark bg-opacity-25 text-dark">Spring Boot</span>
+                        <span class="badge bg-info bg-opacity-25 text-info">REST APIs</span>
+                        <span class="badge bg-secondary bg-opacity-25 text-secondary">PostgreSQL</span>
+                    </div>
+                    <div class="project-description">
+                        <p>A secure REST API with auth to manage user accounts, handle transactions, check balance, view passbook, and transfer funds. Includes login token expiry management and an integrated loan calculator. Implements JWT authentication, transaction logging, and comprehensive security features.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-success">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 5: Attendance Management System -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <i class="bi bi-clipboard-check"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">Attendance Management</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-warning bg-opacity-25 text-warning">Python</span>
+                        <span class="badge bg-success bg-opacity-25 text-success">Django</span>
+                        <span class="badge bg-info bg-opacity-25 text-info">SQLite</span>
+                        <span class="badge bg-primary bg-opacity-25 text-primary">CSV/PDF</span>
+                    </div>
+                    <div class="project-description">
+                        <p>A system that enables users to log in, manage student lists, mark attendance, and download records in CSV or PDF format. Features role-based access (admin, teacher, student), attendance analytics, and report generation capabilities.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-warning">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 6: Blogzy -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">Blogzy</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-info bg-opacity-25 text-info">Java</span>
+                        <span class="badge bg-dark bg-opacity-25 text-dark">Spring Boot</span>
+                        <span class="badge bg-primary bg-opacity-25 text-primary">REST APIs</span>
+                        <span class="badge bg-secondary bg-opacity-25 text-secondary">PostgreSQL</span>
+                    </div>
+                    <div class="project-description">
+                        <p>A REST API-based microblogging system with auth, where users can post, view, like, comment, reply, and delete blogs—similar to social media's feed. Features real-time notifications, user engagement tracking, and content management capabilities.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-info">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 7: Advanced Surveillance System -->
+        <div class="col-md-6 col-lg-4">
+            <div class="project-card h-100">
+                <div class="project-image-wrapper">
+                    <div class="project-image" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <i class="bi bi-camera-video"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h5 class="project-title">Surveillance System</h5>
+                    <div class="project-tech-stack">
+                        <span class="badge bg-warning bg-opacity-25 text-warning">Python</span>
+                        <span class="badge bg-danger bg-opacity-25 text-danger">TensorFlow</span>
+                        <span class="badge bg-dark bg-opacity-25 text-dark">YOLO</span>
+                        <span class="badge bg-info bg-opacity-25 text-info">MongoDB</span>
+                    </div>
+                    <div class="project-description">
+                        <p>A collaborative project involving frontend, backend, and AI model developers. The AI model detects mischief under CCTV surveillance using YOLOv5 and TensorFlow, ensuring efficient real-time monitoring and tracking. Features real-time alerts, video analysis, and behavior classification.</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-purple">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
