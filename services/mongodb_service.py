@@ -47,7 +47,7 @@ class MongoDBService:
         self._initialize_mongodb()
     
     def _initialize_mongodb(self):
-        """Initialize MongoDB Atlas connection with SSL/TLS handling and local fallback"""
+        """Initialize MongoDB Atlas connection with SSL/TLS handling"""
         try:
             from pymongo import MongoClient
             
@@ -102,41 +102,9 @@ class MongoDBService:
                 return
                 
             except Exception as ssl_error:
-                # If SSL verification fails, try without strict verification
-                _safe_print("[MongoDB] WARNING: SSL verification failed, retrying without strict verification...")
-                
-                self._client = MongoClient(
-                    mongodb_uri,
-                    connectTimeoutMS=45000,
-                    socketTimeoutMS=45000,
-                    serverSelectionTimeoutMS=45000,
-                    retryWrites=True,
-                    w='majority',
-                    authSource='admin',
-                    minPoolSize=1,
-                    maxPoolSize=50,
-                    maxIdleTimeMS=45000,
-                    # SSL/TLS settings - less strict
-                    ssl=True,
-                    tlsInsecure=True  # Disable certificate verification (for firewall issues)
-                )
-                
-                # Test connection
-                self._client.admin.command('ping')
-                self._db = self._client['Quizgenerator']
-                self._initialized = True
-                
-                # Extract connection info for display
-                uri_parts = mongodb_uri.replace('mongodb://', '').replace('mongodb+srv://', '')
-                host_info = uri_parts.split('/')[0]
-                
-                _safe_print(f"[MongoDB] SUCCESS: Connected to MongoDB (SSL unverified)")
-                _safe_print(f"[MongoDB] Host: {host_info}")
-                _safe_print(f"[MongoDB] Database: Quizgenerator")
-                
-                # Create indexes for better performance
-                self._create_indexes()
-                return
+                # If SSL verification fails, raise the error - don't allow insecure connections
+                _safe_print(f"[MongoDB] ERROR: Cannot connect with secure connection: {ssl_error}")
+                raise ssl_error
             
         except Exception as e:
             error_msg = str(e)
@@ -151,7 +119,8 @@ class MongoDBService:
                 _safe_print("    - Click 'Cluster0'")
                 _safe_print("    - Go to 'Security' > 'Network Access'")
                 _safe_print("    - Click 'Add IP Address'")
-                _safe_print("    - Select 'Allow Access from Anywhere' (0.0.0.0/0)")
+                _safe_print("    - Enter your current IP address (NOT 0.0.0.0/0)")
+                _safe_print("    - Or add your office/home network IP range")
                 _safe_print("    - Click 'Confirm' and wait 2-3 minutes")
                 _safe_print("")
                 _safe_print("[2] CHECK FIREWALL SETTINGS:")
@@ -173,17 +142,16 @@ class MongoDBService:
                 _safe_print("")
             elif 'authentication' in error_msg.lower() or 'auth' in error_msg.lower():
                 _safe_print("[MongoDB] ERROR: Authentication failed!")
-                _safe_print("[MongoDB] Check credentials in .env:")
-                _safe_print("    - Username: krishalmodi2345_db_user")
-                _safe_print("    - Password: c35p04qQXnVk9VaU")
-                _safe_print("    - Verify they are correct in MongoDB Atlas")
+                _safe_print("[MongoDB] Check credentials in .env file:")
+                _safe_print("    - Verify MONGODB_URI is correct")
+                _safe_print("    - Verify credentials in MongoDB Atlas match .env")
             
             # Try automatic fallback to local MongoDB so the app can still fully work
             try:
                 from pymongo import MongoClient as _MongoClientFallback
                 fallback_uri = os.getenv(
                     'MONGODB_FALLBACK_URI',
-                    'mongodb://localhost:27017/Quizgenerator'
+                    # 'mongodb://localhost:27017/Quizgenerator'
                 )
                 if fallback_uri:
                     _safe_print("[MongoDB] Attempting fallback to local MongoDB...")
@@ -282,13 +250,17 @@ class MongoDBService:
                 raise Exception("Incorrect password. Please try again.")
             
             # Generate JWT token
+            secret_key = os.getenv('SECRET_KEY')
+            if not secret_key:
+                raise Exception('SECRET_KEY environment variable not configured')
+            
             token = jwt.encode(
                 {
                     'user_id': str(user['_id']),
                     'email': user['email'],
                     'exp': datetime.utcnow().timestamp() + 86400 * 7  # 7 days
                 },
-                os.getenv('SECRET_KEY', 'your-secret-key-change-in-production'),
+                secret_key,
                 algorithm='HS256'
             )
             

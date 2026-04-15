@@ -180,13 +180,7 @@ def progress():
     # Get weak concepts
     weak_concepts = get_weak_concepts(concept_mastery)
     
-    # Debug output
-    print(f"[Progress Page Debug]")
-    print(f"  Total quizzes: {len(quiz_history)}")
-    print(f"  Concepts tracked: {len(concept_mastery)}")
-    print(f"  Mastery labels: {len(mastery_labels)}")
-    print(f"  Mastery data points: {len(mastery_data)}")
-    print(f"  Has data for graph: {len(mastery_labels) > 0 and len(mastery_data) > 0}")
+    # Progress page loaded successfully
     if mastery_labels:
         print(f"  First concept: {mastery_labels[0]} = {mastery_data[0]}%")
     

@@ -47,7 +47,19 @@ def start_quiz(quiz_id):
     if quiz.get('is_password_protected'):
         if request.method == 'POST':
             password = request.form.get('password')
-            if password == quiz.get('password'):
+            password_hash = quiz.get('password_hash', '')
+            
+            # Verify password using bcrypt
+            try:
+                import bcrypt
+                if password and password_hash:
+                    is_valid = bcrypt.checkpw(password.encode(), password_hash.encode())
+                else:
+                    is_valid = False
+            except:
+                is_valid = False
+            
+            if is_valid:
                 session[f'quiz_access_{quiz_id}'] = True
             else:
                 flash('Incorrect password.', 'danger')
@@ -239,7 +251,7 @@ def submit_quiz(quiz_id):
     session[f'quiz_result_{attempt_id}'] = result_data
     session.modified = True  # Force session save
     
-    print(f"[SESSION] Stored result in session key: quiz_result_{attempt_id}")
+# Quiz result stored in session
     
     # Try to save to Firebase, but don't crash if it fails
     save_success = True

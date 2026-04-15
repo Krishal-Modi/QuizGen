@@ -176,6 +176,12 @@ def generate_quiz(doc_id):
             
             # Create quiz
             user_id = session.get('user_id')
+            
+            # Hash password if quiz is password protected
+            password_hash = None
+            if is_password_protected and password:
+                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+            
             quiz_data = {
                 'name': quiz_name,
                 'document_id': doc_id,
@@ -185,7 +191,7 @@ def generate_quiz(doc_id):
                 'difficulty': difficulty,
                 'is_adaptive': is_adaptive,
                 'is_password_protected': is_password_protected,
-                'password': password if is_password_protected else None
+                'password_hash': password_hash
             }
             
             quiz_id = db_service.create_quiz(quiz_data, questions)

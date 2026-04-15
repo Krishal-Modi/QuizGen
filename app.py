@@ -25,7 +25,13 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-change-in-production')
+secret_key = os.getenv('SECRET_KEY')
+if not secret_key:
+    raise ValueError(
+        'SECRET_KEY environment variable not set. '
+        'Please set SECRET_KEY in your .env file for production use.'
+    )
+app.secret_key = secret_key
 
 # Import blueprints
 from routes.auth import auth_bp
@@ -40,6 +46,17 @@ app.register_blueprint(quiz_bp, url_prefix='/quiz')
 app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
 app.register_blueprint(instructor_bp, url_prefix='/instructor')
 app.register_blueprint(api_bp, url_prefix='/api')
+
+# Security Headers - Protection against XSS, clickjacking, MIME-type sniffing
+@app.after_request
+def set_security_headers(response):
+    """Add security headers to all responses"""
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net; font-src 'self' fonts.googleapis.com fonts.gstatic.com"
+    return response
 
 
 # Login required decorator
